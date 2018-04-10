@@ -1,0 +1,71 @@
+<app-loading [condition]="isLoading"></app-loading>
+<app-toast [message]="toast.message"></app-toast>
+<div class="card" *ngIf="!isLoading">
+  <h5 class="card-header">Total Threads: ({{threads.length}})
+  <a routerLink="/create-thread" class="float-right" *ngIf="auth.loggedIn">
+            <i class="fa fa-plus"></i> Create Thread
+          </a>
+          <span class="float-right" *ngIf="!auth.loggedIn">Login to Create Thread</span>
+    </h5>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-dark text-center">
+          <tr>
+            <th scope="col">*</th>
+            <th scope="col">Title</th>
+            <th scope="col">Created By</th>
+            <th scope="col">Likes</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Updated At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="text-center" *ngIf="threads.length === 0">
+            <th scope="row" colspan="6">
+              <label *ngIf="auth.loggedIn">
+                No threads to display, <a routerLink="/create-thread">create</a> one!
+              </label>
+              <label *ngIf="!auth.loggedIn">
+                No threads to display, login to create one!
+              </label>
+            </th>
+          </tr>
+          <tr *ngFor="let thread of threads | filterThread: {isPinned: true}" class="table-active">
+            <th><label class="fa fa-map-pin"></label></th>
+            <th scope="row"><a routerLink="/view-thread/{{thread._id}}">
+             {{thread.title}}
+          </a>
+            </th>
+            <th>{{thread.createdBy.name}}</th>
+            <th> <span>
+                <i class="fa fa-heart"></i> {{thread.likes}}
+              </span></th>
+            <th>
+              <label class="badge badge-pill badge-info" *ngFor="let t of thread.tags">
+                {{t.displayValue}}
+              </label>
+            </th>
+            <th>{{thread.lastUpdateAt | date:'medium'}}</th>
+          </tr>
+          <tr *ngFor="let thread of threads | filterThread: {isPinned: false}">
+            <th></th>
+            <th scope="row"><a routerLink="/view-thread/{{thread._id}}">
+             {{thread.title}}
+          </a></th>
+            <th>{{thread.createdBy.name}}</th>
+            <th> <span>
+                <i class="fa fa-heart"></i> {{thread.likes}}
+              </span></th>
+            <th>
+              <label class="badge badge-pill badge-info" *ngFor="let t of thread.tags">
+                {{t.displayValue}}
+              </label>
+            </th>
+            <th>{{thread.lastUpdateAt | date:'medium'}}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

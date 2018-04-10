@@ -1,0 +1,41 @@
+<app-toast [message]="toast.message"></app-toast>
+<div class="card">
+  <h4 class="card-header">Register</h4>
+  <div class="card-body">
+    <form [formGroup]="registerForm" (ngSubmit)="register()" class="needs-validation">
+      <div class="input-group" [ngClass]="setClassName()">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-user"></i></span>
+        </div>
+        <input class="form-control" type="text" name="name" formControlName="name" placeholder="Name" required>
+      </div>
+      <div class="input-group" [ngClass]="setClassEmail()">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+        </div>
+        <input class="form-control" type="email" name="email" formControlName="email" placeholder="Email">
+      </div>
+      <div class="input-group" [ngClass]="setClassPassword()">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fa fa-key"></i></span>
+        </div>
+        <input class="form-control" type="password" name="password" formControlName="password" placeholder="Password">
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-2">
+          <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid"><i class="fa fa-user-plus"></i> Register</button>
+        </div>
+        <div class="col" *ngIf="registerForm.invalid">
+          <div class="alert alert-danger" role="alert">
+            <ul>
+              <li *ngIf="name.invalid">Enter a valid name.</li>
+              <li *ngIf="email.invalid">Enter a valid email address.</li>
+              <li *ngIf="password.invalid">Enter a password that is minimum 6 characters.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

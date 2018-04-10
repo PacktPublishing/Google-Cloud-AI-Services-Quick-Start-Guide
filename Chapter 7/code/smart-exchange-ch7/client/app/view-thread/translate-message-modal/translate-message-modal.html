@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title">Translate Text</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('x')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Original Message</h5> {{message.description}}
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Target Language</label>
+    <select class="form-control" (change)="onChange($event.target.value)">
+      <option *ngFor="let l of languages" [value]="l.code">{{l.name}}</option>
+    </select>
+  </div>
+  <div class="card" *ngIf="targetLang && message.translations[targetLang]">
+    <div class="card-body">
+      <h5 class="card-title">Translated Message</h5> {{message.translations[targetLang]}}
+    </div>
+  </div>
+  <ngb-alert type="danger" [dismissible]="false" *ngIf="error">
+    <strong>Error!</strong> {{error.message || error}}
+  </ngb-alert>
+</div>
+<div class="modal-footer">
+  <i *ngIf="isProcessing" class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+  <button type="button" class="btn btn-success" [disabled]="isProcessing || !targetLang" (click)="translate()">Translate</button>
+</div>

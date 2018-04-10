@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title">Reply with Image</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('x')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+    <p class="text-center mt-5 mb-0">
+      <img [src]="filePreviewPath" width="200" *ngIf="filePreviewPath" />
+    </p>
+    <p>
+      <br>
+      <ngb-alert [dismissible]="false" *ngIf="invalidImage">
+        <strong>Warning!</strong> Please upload a valid image file. Supported file types are {{AllowedImageExt.join(',')}}
+      </ngb-alert>
+      <br>
+      <ngb-alert [dismissible]="false" *ngIf="largeFile">
+        <strong>Warning!</strong> Max file size: 2MB. Uploaded file size {{getFileSize()}}
+      </ngb-alert>
+    </p>
+  </div>
+  <ngb-alert type="danger" [dismissible]="false" *ngIf="error">
+    <strong>Error!</strong> {{error.message || error}}
+  </ngb-alert>
+</div>
+<div class="modal-footer">
+  <i *ngIf="isProcessing" class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+  <button type="button" class="btn btn-success" [disabled]="isProcessing || !fileToUpload || invalidImage || largeFile" (click)="reply()">Reply</button>
+</div>

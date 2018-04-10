@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h4 class="modal-title">Reply with Video</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('x')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="form-group">
+    <div class="text-center">
+      <video #video class="video"></video>
+    </div>
+    <br>
+    <button type="button" class="btn btn-success" [disabled]="isRecording || isProcessing" (click)="startRecording()">Record</button>
+    <button type="button" class="btn btn-warning" [disabled]="!isRecording || isProcessing" (click)="stopRecording()">Stop</button>
+    <button type="button" class="btn btn-info" (click)="download()" [disabled]="!hasRecorded || isProcessing">Download</button>
+  </div>
+  <ngb-alert type="danger" [dismissible]="false" *ngIf="error">
+    <strong>Error!</strong> {{error.message || error}}
+  </ngb-alert>
+</div>
+<div class="modal-footer">
+  <label *ngIf="isProcessing">This might take a couple of minutes. Please be patient</label>
+  <i *ngIf="isProcessing" class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+  <button type="button" class="btn btn-success" [disabled]="isProcessing || !hasRecorded" (click)="reply()">Reply</button>
+</div>

@@ -1,0 +1,220 @@
+<app-loading [condition]="isLoading"></app-loading>
+<app-toast [message]="toast.message"></app-toast>
+<div *ngIf="!isLoading">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <h4>{{thread.title}}</h4>
+          <p>Created By: {{thread.createdBy.name}}</p>
+          <p>Updated At: {{thread.lastUpdateAt | date:'medium'}}</p>
+        </div>
+        <div class="col text-right">
+          <button routerLink="/" class="btn btn-info">Back</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-text" [innerHTML]="thread.description"></p>
+    </div>
+    <div class="card-footer row">
+      <div class="col">
+        <span class="pointer" (click)="incThreadLike()">
+                <i class="fa fas fa-heart"></i> {{thread.likes}}
+              </span>
+      </div>
+      <div class="col text-right">
+        &nbsp;&nbsp;&nbsp;
+        <span class="text-info pointer" *ngIf="auth.getCurrentUser()._id === thread.createdBy._id || auth.getCurrentUser().role === 'admin'" (click)="editThread(thread)">
+                <i class="fa fas fa-edit"></i> Thread
+              </span> &nbsp;&nbsp;&nbsp;
+        <span class="text-danger pointer" *ngIf="auth.getCurrentUser()._id === thread.createdBy._id || auth.getCurrentUser().role === 'admin'" (click)="deleteThread(thread)">
+                <i class="fa fas fa-trash"></i> Thread
+              </span>
+      </div>
+    </div>
+  </div>
+  <h5 class="text-center mt-1">Comments</h5>
+  <div class="card" *ngIf="thread.messages.length === 0">
+    <div class="card-header text-center">
+      <h6>No comments on this thread yet! Create one below.</h6>
+    </div>
+  </div>
+  <div class="card mb-2" *ngFor="let message of thread.messages">
+    <div class="row">
+      <div class="col-3 card-header">
+        <p>Created By: {{message.createdBy.name}}</p>
+        <p>Updated At: {{message.lastUpdateAt | date:'medium'}}</p>
+        <hr>
+        <span class="pointer" (click)="incMessageLikes(message)">
+                <i class="fa fas fa-heart"></i> {{message.likes}}
+              </span> &nbsp;&nbsp;&nbsp;
+        <span class="text-danger pointer" *ngIf="auth.getCurrentUser()._id === message.createdBy._id || auth.getCurrentUser().role === 'admin'" (click)="deleteMessage(message)">
+                <i class="fa fas fa-trash"></i> Message
+              </span>
+        <!-- Any text message will have a nlpLanguage varible -->
+        <div *ngIf="message.nlpLanguage">
+          <br>
+          <button class="btn btn-info btn-block" type="button" (click)="translateMessage(message)"><i class="fa fa-arrows-h"></i> Translate Message</button>
+        </div>
+        <br>
+        <label class="badge badge-pill badge-info" *ngFor="let l of message.labels">
+          {{l.description}}
+        </label>
+        <label class="badge badge-pill badge-info" *ngFor="let s of message.segmentLabelAnnotations">
+          {{s.entity.description}}
+        </label>
+        <!-- Related to NLP API -->
+        <!-- Sentiment -->
+        <div *ngIf="message.nlpDocumentSentiment">
+          <b>Sentiment</b>:
+          <label class="badge badge-pill badge-success" *ngIf="message.nlpDocumentSentiment.score > 0.1">
+            Positive
+          </label>
+          <label class="badge badge-pill badge-info" *ngIf="message.nlpDocumentSentiment.score === 0">
+            Neutral
+          </label>
+          <label class="badge badge-pill badge-danger" *ngIf="message.nlpDocumentSentiment.score < 0.1">
+            Negative
+          </label>
+        </div>
+        <!-- Catgories -->
+        <div *ngIf="message.nlpCategories.length > 0">
+          <b>Categories</b>:
+          <label class="badge badge-pill badge-info" *ngFor="let c of message.nlpCategories">
+            {{c.name}}
+          </label>
+        </div>
+        <!-- Language -->
+        <div *ngIf="message.nlpLanguage">
+          <b>Language</b>:
+          <label class="badge badge-pill badge-default">
+            {{message.nlpLanguage}}
+          </label>
+        </div>
+        <!-- Related to NLP API -->
+      </div>
+      <div class="col">
+        <div class="card-body">
+          <p class="card-text" [innerHTML]="sanitizeContent(message.description)"></p>
+          <br>
+          <div class="table-responsive" *ngIf="message.safeSearchProps">
+            <table class="table table-bordered">
+              <thead class="thead-dark text-center">
+                <tr>
+                  <th scope="col">Adult</th>
+                  <th scope="col">Medical</th>
+                  <th scope="col">Racy</th>
+                  <th scope="col">Spoof</th>
+                  <th scope="col">Violence</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center">
+                  <th>
+                    {{message.safeSearchProps.adult}}
+                  </th>
+                  <th>
+                    {{message.safeSearchProps.medical}}
+                  </th>
+                  <th>
+                    {{message.safeSearchProps.racy}}
+                  </th>
+                  <th>
+                    {{message.safeSearchProps.spoof}}
+                  </th>
+                  <th>
+                    {{message.safeSearchProps.violence}}
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive" *ngIf="message.transcriptions.length > 0">
+            <table class="table table-bordered">
+              <thead class="thead-dark text-center">
+                <tr>
+                  <th scope="col">Transcript</th>
+                  <th scope="col">Confidence</th>
+                  <th scope="col">Words</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center" *ngFor="let t of message.transcriptions">
+                  <th>
+                    {{t.transcript}}
+                  </th>
+                  <th>
+                    {{(t.confidence * 100).toFixed(5)}} %
+                  </th>
+                  <th>
+                    {{t.words.join(';') || '--'}}
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive" *ngIf="message.nlpSentences.length > 0">
+            <table class="table table-bordered">
+              <thead class="thead-dark text-center">
+                <tr>
+                  <th scope="col">Text</th>
+                  <th scope="col">Sentiment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center" *ngFor="let s of message.nlpSentences">
+                  <th>
+                    {{s.text.content}}
+                  </th>
+                  <th>
+                    <label class="badge badge-pill badge-success" *ngIf="s.sentiment.score > 0.1">
+                      Positive
+                    </label>
+                    <label class="badge badge-pill badge-info" *ngIf="s.sentiment.score === 0">
+                      Neutral
+                    </label>
+                    <label class="badge badge-pill badge-danger" *ngIf="s.sentiment.score < 0.1">
+                      Negative
+                    </label>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="card">
+    <div class="card-header text-center bg-dark">
+      <h6 class="text-light">Reply to thread</h6>
+    </div>
+    <div class="card-body" *ngIf="!auth.loggedIn">
+      <h3 class="text-center">Login to reply to this thread!</h3>
+    </div>
+    <div class="card-body" *ngIf="auth.loggedIn">
+      <form [formGroup]="createMessageForm" class="needs-validation">
+        <div class="form-group">
+          <app-ngx-editor [config]="editorConfig" formControlName="description" resizer="stack"></app-ngx-editor>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <button class="btn btn-primary" type="submit" (click)="addMessage(thread)" [disabled]="!createMessageForm.valid"><i class="fa fa-user-plus"></i> Reply</button>
+          </div>
+          <div class="col text-center">
+            <button class="btn btn-info" type="submit" (click)="uploadImage(thread)"><i class="fa fa-user-plus"></i> Reply with Image</button>
+          </div>
+          <div class="col text-center">
+            <button class="btn btn-success" type="submit" (click)="uploadVideo(thread)"><i class="fa  fa-video-camera"></i> Reply with Video</button>
+          </div>
+          <div class="col text-center">
+            <button class="btn btn-dark" type="submit" (click)="uploadAudio(thread)"><i class="fa fa-microphone"></i> Reply with Audio</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

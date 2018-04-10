@@ -1,0 +1,17 @@
+<app-loading [condition]="isLoading"></app-loading>
+<app-toast [message]="toast.message"></app-toast>
+<div class="card" *ngIf="!isLoading">
+  <h4 class="card-header">Account settings</h4>
+  <div class="card-body">
+    <table class="table table-bordered">
+      <tr>
+        <th>Name</th>
+        <td>{{user.name}}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>{{user.email}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

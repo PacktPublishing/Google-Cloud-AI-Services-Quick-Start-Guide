@@ -1,0 +1,13 @@
+/* Display icons next to form elements consistently */
+.input-group-text{
+	min-width: 45px;
+}
+
+/* Add custom CSS for form validation */
+input.form-control.ng-invalid.ng-touched {
+    border-color: #dc3545;
+}
+
+input.form-control.ng-valid.ng-touched {
+    border-color: #28a745
+}

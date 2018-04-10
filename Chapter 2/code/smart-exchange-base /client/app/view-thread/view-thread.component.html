@@ -1,0 +1,84 @@
+<app-loading [condition]="isLoading"></app-loading>
+<app-toast [message]="toast.message"></app-toast>
+<div *ngIf="!isLoading">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <h4>{{thread.title}}</h4>
+          <p>Created By: {{thread.createdBy.name}}</p>
+          <p>Updated At: {{thread.lastUpdateAt | date:'medium'}}</p>
+        </div>
+        <div class="col text-right">
+          <button routerLink="/" class="btn btn-info">Back</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <p class="card-text" [innerHTML]="thread.description"></p>
+    </div>
+    <div class="card-footer row">
+      <div class="col">
+        <span class="pointer" (click)="incThreadLike()">
+                <i class="fa fas fa-heart"></i> {{thread.likes}}
+              </span>
+      </div>
+      <div class="col text-right">
+        &nbsp;&nbsp;&nbsp;
+        <span class="text-info pointer" *ngIf="auth.getCurrentUser()._id === thread.createdBy._id || auth.getCurrentUser().role === 'admin'" (click)="editThread(thread)">
+                <i class="fa fas fa-edit"></i> Thread
+              </span> &nbsp;&nbsp;&nbsp;
+        <span class="text-danger pointer" *ngIf="auth.getCurrentUser()._id === thread.createdBy._id || auth.getCurrentUser().role === 'admin'" (click)="deleteThread(thread)">
+                <i class="fa fas fa-trash"></i> Thread
+              </span>
+      </div>
+    </div>
+  </div>
+  <h5 class="text-center mt-1">Comments</h5>
+  <div class="card" *ngIf="thread.messages.length === 0">
+    <div class="card-header text-center">
+      <h6>No comments on this thread yet! Create one below.</h6>
+    </div>
+  </div>
+  <div class="card mb-2" *ngFor="let message of thread.messages">
+    <div class="row">
+      <div class="col-3 card-header">
+        <p>Created By: {{message.createdBy.name}}</p>
+        <p>Updated At: {{message.lastUpdateAt | date:'medium'}}</p>
+        <hr>
+        <span class="pointer" (click)="incMessageLikes(message)">
+                <i class="fa fas fa-heart"></i> {{message.likes}}
+              </span> &nbsp;&nbsp;&nbsp;
+        <span class="text-danger pointer" *ngIf="auth.getCurrentUser()._id === message.createdBy._id || auth.getCurrentUser().role === 'admin'" (click)="deleteMessage(message)">
+                <i class="fa fas fa-trash"></i> Message
+              </span>
+      </div>
+      <div class="col">
+        <div class="card-body">
+          <p class="card-text" [innerHTML]="message.description"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="card">
+    <div class="card-header text-center bg-dark">
+      <h6 class="text-light">Reply to thread</h6>
+    </div>
+    <div class="card-body" *ngIf="!auth.loggedIn">
+      <h3 class="text-center">Login to reply to this thread!</h3>
+    </div>
+    <div class="card-body" *ngIf="auth.loggedIn">
+      <form [formGroup]="createMessageForm" class="needs-validation">
+        <div class="form-group">
+          <app-ngx-editor [config]="editorConfig" formControlName="description" resizer="stack"></app-ngx-editor>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <button class="btn btn-primary" type="submit" (click)="addMessage(thread)" [disabled]="!createMessageForm.valid"><i class="fa fa-user-plus"></i> Reply</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.pointer {
+  cursor: pointer;
+}
+
+.card-header p {
+  margin: 0px;
+  color: #999;
+}

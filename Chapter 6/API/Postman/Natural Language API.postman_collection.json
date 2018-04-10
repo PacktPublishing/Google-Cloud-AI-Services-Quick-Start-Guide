@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "5f7f112e-c670-43d6-af0b-b314d7d61f79",
+		"name": "Natural Language API",
+		"description": "Natural Language API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Analyzing Sentiment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"encodingType\": \"UTF8\",\n    \"document\":\n    {\n        \"type\": \"PLAIN_TEXT\",\n        \"content\": \"Enjoy your vacation!\"\n    }\n}"
+				},
+				"url": {
+					"raw": "https://language.googleapis.com/v1/documents:analyzeSentiment?key=AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk",
+					"protocol": "https",
+					"host": [
+						"language",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"documents:analyzeSentiment"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk"
+						}
+					]
+				},
+				"description": "https://cloud.google.com/natural-language/docs/analyzing-sentiment"
+			},
+			"response": []
+		},
+		{
+			"name": "Analyzing Entities",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"encodingType\": \"UTF8\",\n    \"document\":\n    {\n        \"type\": \"PLAIN_TEXT\",\n        \"content\": \"President Obama is speaking at the White House.\"\n    }\n}"
+				},
+				"url": {
+					"raw": "https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk",
+					"protocol": "https",
+					"host": [
+						"language",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"documents:analyzeEntities"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk"
+						}
+					]
+				},
+				"description": "https://cloud.google.com/natural-language/docs/analyzing-sentiment"
+			},
+			"response": []
+		},
+		{
+			"name": "Analyzing Syntax",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"encodingType\": \"UTF8\",\n    \"document\":\n    {\n        \"type\": \"PLAIN_TEXT\",\n        \"content\": \"Google, headquartered in Mountain View, unveiled the new Android phone at the Consumer Electronic Show.  Sundar Pichai said in his keynote that users love their new Android phones.\"\n    }\n}"
+				},
+				"url": {
+					"raw": "https://language.googleapis.com/v1/documents:analyzeSyntax?key=AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk",
+					"protocol": "https",
+					"host": [
+						"language",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"documents:analyzeSyntax"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk"
+						}
+					]
+				},
+				"description": "https://cloud.google.com/natural-language/docs/analyzing-sentiment"
+			},
+			"response": []
+		},
+		{
+			"name": "Analyzing Entity Sentiment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"encodingType\": \"UTF8\",\n    \"document\":\n    {\n        \"type\": \"PLAIN_TEXT\",\n        \"content\": \"I love R&B music. Marvin Gaye is the best. 'What's Going On' is one of my favorite songs. It was so sad when Marvin Gaye died.\"\n    }\n}"
+				},
+				"url": {
+					"raw": "https://language.googleapis.com/v1/documents:analyzeEntitySentiment?key=AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk",
+					"protocol": "https",
+					"host": [
+						"language",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"documents:analyzeEntitySentiment"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk"
+						}
+					]
+				},
+				"description": "https://cloud.google.com/natural-language/docs/analyzing-sentiment"
+			},
+			"response": []
+		},
+		{
+			"name": "Classifying Content",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"document\":\n    {\n        \"type\": \"PLAIN_TEXT\",\n        \"content\": \"Google, headquartered in Mountain View, unveiled the new Android phone at the Consumer Electronic Show.  Sundar Pichai said in his keynote that users love their new Android phones..\"\n    }\n}"
+				},
+				"url": {
+					"raw": "https://language.googleapis.com/v1/documents:classifyText?key=AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk",
+					"protocol": "https",
+					"host": [
+						"language",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"documents:classifyText"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk"
+						}
+					]
+				},
+				"description": "https://cloud.google.com/natural-language/docs/analyzing-sentiment"
+			},
+			"response": []
+		},
+		{
+			"name": "Annotate Text",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"encodingType\": \"UTF8\",\n    \"document\":\n    {\n        \"type\": \"PLAIN_TEXT\",\n        \"content\": \"Welcome to the book on \\\"Getting started with Google Cloud AI Services\\\", where we are going to explore the powerful Google Cloud AI services via a project based approach. We are going to build a forum application, similar to Discourse or Stack Overflow where users start a discussion thread and other users comment on it.\"\n    },\n    \"features\":\n    {\n        \"extractSyntax\": true,\n        \"extractEntities\": true,\n        \"extractDocumentSentiment\": true,\n        \"extractEntitySentiment\": true,\n        \"classifyText\": true\n    }\n}"
+				},
+				"url": {
+					"raw": "https://language.googleapis.com/v1/documents:annotateText?key=AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk",
+					"protocol": "https",
+					"host": [
+						"language",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"v1",
+						"documents:annotateText"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "AIzaSyAmMqOXsDk8HflP_iDXERyiU2FB9FhDCQk"
+						}
+					]
+				},
+				"description": "https://cloud.google.com/natural-language/docs/analyzing-sentiment"
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "7ed2f90e-3ea1-4bb0-9fae-677cff7b25f8",
+		"name": "Cloud Translation API",
+		"description": "Cloud Translation API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Supported Languages",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"target\" : \"en\"\n}"
+				},
+				"url": {
+					"raw": "https://translation.googleapis.com/language/translate/v2/languages?key=API_KEY",
+					"protocol": "https",
+					"host": [
+						"translation",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"language",
+						"translate",
+						"v2",
+						"languages"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "API_KEY"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Translate text",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"target\" : \"fr\",\n\t\"q\" : \"Hello World!\"\n}"
+				},
+				"url": {
+					"raw": "https://translation.googleapis.com/language/translate/v2?key=API_KEY",
+					"protocol": "https",
+					"host": [
+						"translation",
+						"googleapis",
+						"com"
+					],
+					"path": [
+						"language",
+						"translate",
+						"v2"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "API_KEY"
+						}
+					]
+				},
+				"description": "Translate text"
+			},
+			"response": []
+		}
+	]
+}
