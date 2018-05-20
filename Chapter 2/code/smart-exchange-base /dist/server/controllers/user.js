@@ -12,6 +12,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var auth_1 = require("../auth");
 var user_1 = require("../models/user");
+var thread_1 = require("../models/thread");
+var message_1 = require("../models/message");
 var base_1 = require("./base");
 var UserCtrl = /** @class */ (function (_super) {
     __extends(UserCtrl, _super);
@@ -33,6 +35,29 @@ var UserCtrl = /** @class */ (function (_super) {
                     res.status(200).json({
                         token: token,
                         user: user.toJSON()
+                    });
+                });
+            });
+        };
+        _this.delete = function (req, res) {
+            _this.model.findOneAndRemove({ _id: req.params.id }, function (err) {
+                if (err) {
+                    return _this.respondErrorMessage(res, err);
+                }
+                // Also delete the associated threads and messages
+                message_1.default.findOneAndRemove({
+                    createdBy: req.params.id
+                }, function (err) {
+                    if (err) {
+                        return _this.respondErrorMessage(res, err);
+                    }
+                    thread_1.default.findOneAndRemove({
+                        createdBy: req.params.id
+                    }, function (err) {
+                        if (err) {
+                            return _this.respondErrorMessage(res, err);
+                        }
+                        res.sendStatus(200);
                     });
                 });
             });

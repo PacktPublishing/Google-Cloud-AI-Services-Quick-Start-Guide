@@ -36,7 +36,12 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 mongoose.Promise = global.Promise;
-const mongodb = mongoose.connect(mongodbURI);
+const mongodb = mongoose.connect(mongodbURI, {
+  autoReconnect: true,
+  keepAlive: true,
+  connectTimeoutMS: 300000,
+  socketTimeoutMS: 300000
+});
 
 mongodb
   .then((db) => {

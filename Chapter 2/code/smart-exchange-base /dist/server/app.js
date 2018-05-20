@@ -35,7 +35,12 @@ else {
     app.use(morgan('dev'));
 }
 mongoose.Promise = global.Promise;
-var mongodb = mongoose.connect(mongodbURI);
+var mongodb = mongoose.connect(mongodbURI, {
+    autoReconnect: true,
+    keepAlive: true,
+    connectTimeoutMS: 300000,
+    socketTimeoutMS: 300000
+});
 mongodb
     .then(function (db) {
     console.log('Connected to MongoDB');
