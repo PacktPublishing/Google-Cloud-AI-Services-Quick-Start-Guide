@@ -40,7 +40,7 @@ You need to have Node.js 6.13.1 installed on your machine to follow along with t
 ## Related Products
 * [Google Cloud Platform Cookbook ](https://www.packtpub.com/big-data-and-business-intelligence/google-cloud-ai-services-quick-start-guide?utm_source=github&utm_medium=repository&utm_campaign=9781788626613)
 
-* [Cloud Analytics with Google Cloud Platform](https://www.packtpub.com/big-data-and-business-intelligence/google-cloud-ai-services-quick-start-guide?utm_source=github&utm_medium=repository&utm_campaign=9781788626613)
+* [Cloud Analytics with Google Cloud Platform](https://www.packtpub.com/big-data-and-business-intelligence/cloud-analytics-google-cloud-platform)
 
 * [Hands-On Machine Learning on Google Cloud Platform](https://www.packtpub.com/big-data-and-business-intelligence/machine-learning-google-cloud-platform?utm_source=github&utm_medium=repository&utm_campaign=9781788393485)
 
