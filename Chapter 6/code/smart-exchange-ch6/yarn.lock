@@ -1754,9 +1754,9 @@ codelyzer@~4.0.1:
     source-map "^0.5.6"
     sprintf-js "^1.0.3"
 
-codemirror@^5.35.0:
-  version "5.35.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.35.0.tgz#280653d495455bc66aa87e6284292b02775ba878"
+codemirror@^5.58.2:
+  version "5.58.2"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.58.2.tgz#ed54a1796de1498688bea1cdd4e9eeb187565d1b"
 
 coffee-script@^1.12.5:
   version "1.12.7"
